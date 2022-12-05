@@ -1,21 +1,34 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { reactive } from "vue";
+const person = reactive({ name: "", surname: "", gender: "" });
+function doSubmit() {
+  console.log(person);
+}
+</script>
 
 <template>
   <div>
     <form>
       <label for="name">First Name</label>
-      <input type="text" id="name" />
+      <input type="text" id="name" v-model="person.name" autocomplete="off" />
 
       <label for="surname">Secound Name</label>
-      <input type="text" id="sername" />
+      <input
+        type="text"
+        id="sername"
+        v-model="person.surname"
+        autocomplete="off"
+      />
 
       <label for="gender">Gender</label>
-      <select id="gender">
+      <select id="gender" v-model="person.gender">
+        <option hidden selected>Select Gender</option>
         <option value="M">Male</option>
         <option value="F">Female</option>
       </select>
-      <input type="submit" value="Submit" />
+      <input type="submit" value="Submit" @click.prevent="doSubmit" />
     </form>
+    <pre> {{ person }} </pre>
   </div>
 </template>
 
