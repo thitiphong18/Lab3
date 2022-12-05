@@ -3,7 +3,9 @@ import PersonView from "./views/PersonView.vue";
 </script>
 
 <template>
-  <PersonView />
+  <div>
+    <PersonView />
+  </div>
 </template>
 
 <style scoped></style>
