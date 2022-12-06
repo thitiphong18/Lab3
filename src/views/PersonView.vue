@@ -16,6 +16,7 @@ class Person {
 const person = reactive<Person>({ id: -1, name: "", surname: "", gender: "" });
 const msg = reactive({ name: "", surname: "", gender: "" });
 const personList = ref<Person[]>([]);
+const showForm = ref(false);
 const checkName = function (name: string) {
   if (name.trim().length === 0) {
     msg.name = "First name is empty!!!";
@@ -87,12 +88,13 @@ function doSubmit() {
     personList.value.push(p);
     console.log(personList.value);
     clearForm();
+    showForm.value = false;
   }
 }
 </script>
 
 <template>
-  <div>
+  <div v-if="showForm">
     <form>
       <label for="name">First Name</label>
       <input type="text" id="name" v-model="person.name" autocomplete="off" />
@@ -117,19 +119,27 @@ function doSubmit() {
       <input type="submit" value="Submit" @click.prevent="doSubmit" />
     </form>
   </div>
-  <div>
+  <div v-if="!showForm">
+    <div style="width: 100%; text-align: right">
+      <button style="width: 100px" @click="showForm = !showForm">Add</button>
+    </div>
     <table id="persons">
       <thead>
         <th>ID</th>
         <th>First Name</th>
         <th>Secound Name</th>
         <th>Gender</th>
+        <th>Operation</th>
       </thead>
       <tr v-for="(item, index) in personList" :key="index">
         <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
         <td>{{ item.surname }}</td>
         <td>{{ item.gender }}</td>
+        <td>
+          <button style="width: 100px">Edit</button
+          ><button style="width: 100px">Delete</button>
+        </td>
       </tr>
       <tr>
         <td
@@ -156,7 +166,8 @@ select {
   box-sizing: border-box;
 }
 
-input[type="submit"] {
+input[type="submit"],
+button {
   width: 100%;
   background-color: #4caf50;
   color: white;
