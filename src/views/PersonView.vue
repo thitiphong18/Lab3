@@ -129,7 +129,7 @@ function doSubmit() {
         <th>First Name</th>
         <th>Secound Name</th>
         <th>Gender</th>
-        <th>Operation</th>
+        <th style="width: 250px">Operation</th>
       </thead>
       <tr v-for="(item, index) in personList" :key="index">
         <td>{{ item.id }}</td>
@@ -137,8 +137,12 @@ function doSubmit() {
         <td>{{ item.surname }}</td>
         <td>{{ item.gender }}</td>
         <td>
-          <button style="width: 100px">Edit</button
-          ><button style="width: 100px">Delete</button>
+          <button style="width: 100px; background-color: gray">Edit</button
+          ><button
+            style="width: 100px; margin-left: 1em; background-color: red"
+          >
+            Delete
+          </button>
         </td>
       </tr>
       <tr>
