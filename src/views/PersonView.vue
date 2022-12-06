@@ -107,6 +107,10 @@ const doEdit = function (p: Person) {
   person.id = p.id;
   showForm.value = true;
 };
+const doDelete = function (p: Person) {
+  const index = personList.value.findIndex((item) => item.id === p.id);
+  personList.value.splice(index, 1);
+};
 </script>
 
 <template>
@@ -160,6 +164,7 @@ const doEdit = function (p: Person) {
             Edit</button
           ><button
             style="width: 100px; margin-left: 1em; background-color: red"
+            @click="doDelete(item)"
           >
             Delete
           </button>
@@ -167,7 +172,7 @@ const doEdit = function (p: Person) {
       </tr>
       <tr>
         <td
-          colspan="4"
+          colspan="5"
           style="text-align: center"
           v-if="personList.length === 0"
         >
