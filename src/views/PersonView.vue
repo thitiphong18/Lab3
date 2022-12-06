@@ -48,6 +48,7 @@ const clearForm = function () {
   person.name = "";
   person.surname = "";
   person.gender = "";
+  person.id = -1;
   // Updating
   nextTick(() => {
     // Update form finished
@@ -114,7 +115,8 @@ const doDelete = function (p: Person) {
 </script>
 
 <template>
-  <div v-if="showForm">
+  <h2>Person</h2>
+  <div v-if="showForm" class="form">
     <form>
       <label for="name">First Name</label>
       <input type="text" id="name" v-model="person.name" autocomplete="off" />
@@ -211,7 +213,7 @@ input[type="submit"]:hover {
   background-color: #45a049;
 }
 
-div {
+div.form {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
