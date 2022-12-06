@@ -15,6 +15,7 @@ class Person {
 }
 const person = reactive<Person>({ id: -1, name: "", surname: "", gender: "" });
 const msg = reactive({ name: "", surname: "", gender: "" });
+const personList = ref<Person[]>([]);
 const checkName = function (name: string) {
   if (name.trim().length === 0) {
     msg.name = "First name is empty!!!";
@@ -83,7 +84,8 @@ function doSubmit() {
     checkGender(person.gender)
   ) {
     const p = new Person(person.name, person.surname, person.gender);
-    console.log(p);
+    personList.value.push(p);
+    console.log(personList.value);
     clearForm();
   }
 }
@@ -114,7 +116,31 @@ function doSubmit() {
       <span class="error">{{ msg.gender }}</span>
       <input type="submit" value="Submit" @click.prevent="doSubmit" />
     </form>
-    <pre> {{ person }} {{ msg }}</pre>
+  </div>
+  <div>
+    <table id="persons">
+      <thead>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Secound Name</th>
+        <th>Gender</th>
+      </thead>
+      <tr v-for="(item, index) in personList" :key="index">
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.surname }}</td>
+        <td>{{ item.gender }}</td>
+      </tr>
+      <tr>
+        <td
+          colspan="4"
+          style="text-align: center"
+          v-if="personList.length === 0"
+        >
+          No Data
+        </td>
+      </tr>
+    </table>
   </div>
 </template>
 
@@ -154,5 +180,32 @@ div {
   color: red;
   font-size: smaller;
   display: block;
+}
+#persons {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#persons td,
+#persons th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#persons tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#persons tr:hover {
+  background-color: #ddd;
+}
+
+#persons th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04aa6d;
+  color: white;
 }
 </style>
