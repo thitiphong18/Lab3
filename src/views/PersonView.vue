@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, watch } from "vue";
+import { reactive, watch, nextTick } from "vue";
 const person = reactive({ name: "", surname: "", gender: "" });
 const msg = reactive({ name: "", surname: "", gender: "" });
 const checkName = function (name: string) {
@@ -20,6 +20,26 @@ const checkSurname = (surname: string) => {
   return true;
 };
 
+function checkGender(gender: string) {
+  if (gender.trim().length === 0) {
+    msg.gender = "Gender is empty!!!";
+    return false;
+  }
+  msg.gender = "";
+  return true;
+}
+
+const clearForm = function () {
+  person.name = "";
+  person.surname = "";
+  person.gender = "";
+  nextTick(() => {
+    msg.name = "";
+    msg.surname = "";
+    msg.gender = "";
+  });
+};
+
 watch(
   () => person.name,
   (name) => {
@@ -37,17 +57,19 @@ watch(
 watch(
   () => person.gender,
   (gender) => {
-    if (gender.trim().length === 0) {
-      msg.gender = "Gender is empty!!!";
-      return;
-    }
-    msg.gender = "";
+    checkGender(gender);
   }
 );
 
 function doSubmit() {
-  console.log(person);
-  console.log("Name: " + name);
+  if (
+    checkName(person.name) &&
+    checkSurname(person.surname) &&
+    checkGender(person.gender)
+  ) {
+    console.log(person);
+    clearForm();
+  }
 }
 </script>
 
