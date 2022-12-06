@@ -1,8 +1,20 @@
 <script setup lang="ts">
-import { reactive } from "vue";
+import { reactive, watch } from "vue";
 const person = reactive({ name: "", surname: "", gender: "" });
+const msg = reactive({ name: "", surname: "", gender: "" });
+watch(
+  () => person.name,
+  (name) => {
+    if (name.trim().length === 0) {
+      msg.name = "First name is empty!!!";
+    }
+    msg.name = "";
+  }
+);
+
 function doSubmit() {
   console.log(person);
+  console.log("Name: " + name);
 }
 </script>
 
@@ -19,7 +31,7 @@ function doSubmit() {
         v-model="person.surname"
         autocomplete="off"
       />
-
+      <div>{{ msg.name }}</div>
       <label for="gender">Gender</label>
       <select id="gender" v-model="person.gender">
         <option hidden selected>Select Gender</option>
